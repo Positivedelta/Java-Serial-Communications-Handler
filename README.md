@@ -6,7 +6,7 @@ The code included in this repository has been tested on,
 
 It would not be difficult to extend this to support other operating systems or versions
 
-Please note, this code was written for fun and probably contains bugs! However, I plan to evolve and support this code as I use in my other projects
+Please note, this code was written for fun and probably contains bugs! However, I plan to evolve and support this code as I use it in my other projects
 
 #### Prerequisites
 - Java 8
