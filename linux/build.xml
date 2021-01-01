@@ -1,0 +1,53 @@
+<project name="Handler Test" default="jar" basedir=".">
+    <description>Native SerialCommsHandler Test</description>
+
+    <property name="src" location="src"/>
+    <property name="lib" location="lib"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="."/>
+    <!-- property name="log4jconf" value="log4j2.xml"/ -->
+    <property name="jarname" value="hander_test.jar"/>
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="tidy" description="Clean up, but leave the JAR file">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="clean" description="Clean up">
+        <delete dir="${build}"/>
+        <delete file="${dist}/${jarname}"/>
+    </target>
+
+    <target name="compile" depends="clean,init" description="Compile source files">
+        <javac includeantruntime="false" srcdir="${src}/bitparallel/tests" destdir="${build}">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile" description="Build the JAR file">
+        <jar jarfile="${dist}/${jarname}">
+            <zipgroupfileset dir="${lib}" includes="**/*.jar"/>
+            <fileset dir="${build}"/>
+            <!-- zipgroupfileset dir="${lib}/log4j" includes="**/*.jar"/ -->
+            <!-- file name="${log4jconf}"/ -->
+
+            <manifest>
+                <attribute name="Main-Class" value="bitparallel.tests.SerialCommsHandlerTest"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar" description="Build execute the JAR">
+        <java jar="${dist}/${jarname}" fork="true">
+            <arg value="/dev/ttyUSB0"/>
+        </java>
+    </target>
+</project>

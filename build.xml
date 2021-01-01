@@ -1,0 +1,48 @@
+<project name="Build Comms Handler" default="jar" basedir=".">
+    <description>Build the native SerialCommsHandler JAR file</description>
+
+    <property name="src" location="linux/src"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="."/>
+    <property name="jarname" value="serial-hander-v1.0.jar"/>
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="tidy" description="Clean up, but leave the JAR file">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="clean" description="Clean up">
+        <delete dir="${build}"/>
+        <delete file="${dist}/${jarname}"/>
+    </target>
+
+    <target name="compile" depends="clean,init" description="Compile source files">
+        <javac includeantruntime="false" srcdir="${src}" destdir="${build}"/>
+    </target>
+
+    <target name="jar" depends="compile" description="Build the JAR file">
+            <jar jarfile="${dist}/${jarname}">
+            <fileset dir="${build}">
+                <include name="bitparallel/communication/ByteBufferListener.class"/>
+                <include name="bitparallel/communication/SerialCommsHandler.class"/>
+            </fileset>
+            <file name="linux/libserial_comms_handler_linux_arm32.so"/>
+            <file name="windows/libserial_comms_handler_x64.dll"/>
+        </jar>
+    </target>
+
+    <target name="test" depends="jar" description="Build and test the JAR">
+        <input message="Please enter a device name:" addproperty="devicename"/>
+        <java classname="bitparallel.tests.SerialCommsHandlerTest" fork="true">
+            <classpath>
+                <pathelement location="${dist}/${jarname}"/>
+                <pathelement path="${build}"/>
+            </classpath>
+            <arg value="${devicename}"/>
+        </java>
+    </target>
+</project>
