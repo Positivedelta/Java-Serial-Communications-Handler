@@ -1,6 +1,8 @@
 # Java Serial Communications Handler
 #### Written using JNI (with C/C++) and supports Linux & Windows
-The code included in this repository has been tested on 32-bit ARM based Linux (I used Raspberry Pi 4) and Windows 7/10
+The code included in this repository has been tested on,
+- 32-bit ARM based Linux (I used Raspberry Pi 4)
+- Windows 7/10
 
 It would not be difficult to extend this to support other operating systems or versions
 
