@@ -16,7 +16,7 @@ Please note, this code was written for fun and probably contains bugs! However, 
 
 For testing and use on the Raspberry Pi, I installed Oracle's 32-bit ARM based JDK for Linux, download the following distribution jdk-8u271-linux-arm32-vfp-hflt.tar.gz
 
-I choose the Oracle JDK for performance reasons, supposedly the latest OpenJDK has caught up...
+I choose the Oracle JDK for performance reasons (supposedly the latest OpenJDK has caught up)
 
 To install the Oracle JDK on a Raspberry Pi use the following procedure, this is assuming Buster Lite with no existing JDK / JRE (you may need to adapt these steps)
 ```
