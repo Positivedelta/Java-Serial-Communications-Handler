@@ -24,7 +24,7 @@ public class SerialCommsHandlerTest implements ByteBufferListener
         //
         // use: stty -F /dev/ttyUSB0 57600 -echo raw
         // [rx] cat < /dev/ttyUSB0
-        // [tx] echo -n "My name is Max van Daalen and I live at 24 The Ridgeway, Bracknell, Berkshire, RG12 9QU. For tea I am planing to have a chicken sandwich, yum yum!" > /dev/ttyUSB0
+        // [tx] echo -n "My name is Max van Daalen and I live in Bracknell, Berkshire, UK. For tea I am planing to have a chicken sandwich, yum yum!" > /dev/ttyUSB0
         //
         final String message = "Hello world!";
         final byte[] ascii = message.getBytes(StandardCharsets.US_ASCII);
