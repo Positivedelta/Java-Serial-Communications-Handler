@@ -29,8 +29,30 @@ To install the Oracle JDK on a Raspberry Pi use the following procedure, this is
 - sudo update-alternatives --install /usr/bin/javah javah /usr/java/jdk1.8.0_271/bin/javah 1000
 - sudo update-alternatives --install /usr/bin/javap javap /usr/java/jdk1.8.0_271/bin/javap 1000
 - sudo update-alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_271/bin/jar 1000
+```
 
+Test using,
+```
 - java -version
+- javac -version
+```
+To install Apache Ant on a Raspberry Pi use the following procedure, this is assuming Buster Lite and that the above JDK has been installed (you may need to adapt these steps)
+```
+- sudo mkdir /usr/ant
+- cd /usr/ant
+- sudo tar xf ~/apache-ant-1.10.9-bin.tar.gz
+```
+
+Then add the following to your `.bashrc`
+```
+- export ANT_HOME=/usr/local/ant/apache-ant-1.10.9
+- export JAVA_HOME=/usr/java/jdk1.8.0_271
+- export PATH=${PATH}:${ANT_HOME}/bin
+```
+
+Test using,
+```
+- ant -version
 - javac -version
 ```
 #### Notes
