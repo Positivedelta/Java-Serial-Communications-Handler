@@ -4,7 +4,7 @@
     <property name="src" location="linux/src"/>
     <property name="build" location="build"/>
     <property name="dist" location="."/>
-    <property name="jarname" value="serial-hander-v1.0.jar"/>
+    <property name="jarname" value="serial-handler-v1.0.jar"/>
 
     <target name="init">
         <tstamp/>
