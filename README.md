@@ -45,7 +45,7 @@ To install Apache Ant on a Raspberry Pi use the following procedure, this is ass
 
 Then add the following to your `.bashrc` and use `source .bashrc` to refresh (or restart your bash terminal)
 ```
-- export ANT_HOME=/usr/local/ant/apache-ant-1.10.9
+- export ANT_HOME=/usr/ant/apache-ant-1.10.9
 - export JAVA_HOME=/usr/java/jdk1.8.0_271`
 - export PATH=${PATH}:${ANT_HOME}/bin
 ```
