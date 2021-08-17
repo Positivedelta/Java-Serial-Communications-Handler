@@ -96,7 +96,7 @@ public class SerialCommsHandler
                     nativeRxRead(rxBuffer, device, deviceFd);
                     if (rxBuffer.limit() > 0) for(ByteBufferListener byteBufferListener : byteBufferListeners) byteBufferListener.rxedByteBuffer(rxBuffer);
                 }
-                catch (IOException ex)
+                catch (final IOException ex)
                 {
                     // FIXME! investigate ways to throw this exception out of the thread
                     //
@@ -148,7 +148,7 @@ public class SerialCommsHandler
         {
             nativeStop(device, deviceFd);
         }
-        catch (IOException ex)
+        catch (final IOException ex)
         {
             deviceFd = -1;
             throw ex;
@@ -191,7 +191,7 @@ public class SerialCommsHandler
             //
             System.load(tempDir.getPath() + File.separator + libraryName);
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
             final StringBuffer sb = new StringBuffer();
             sb.append("Failed to install the native library, reason: ");

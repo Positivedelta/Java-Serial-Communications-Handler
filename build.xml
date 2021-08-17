@@ -40,6 +40,9 @@
         <java classname="bitparallel.tests.SerialCommsHandlerTest" fork="true">
             <classpath>
                 <pathelement location="${dist}/${jarname}"/>
+
+                <!-- this is included to pickup the test class, everything else is in the jar -->
+                <!-- -->
                 <pathelement path="${build}"/>
             </classpath>
             <arg value="${devicename}"/>
