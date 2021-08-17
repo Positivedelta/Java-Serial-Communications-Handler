@@ -135,7 +135,6 @@ public class SerialCommsHandler
         }
 
         connected = false;
-
         try
         {
             rxCpu.join();
