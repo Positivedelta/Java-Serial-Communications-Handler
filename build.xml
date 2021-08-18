@@ -27,7 +27,7 @@
     <target name="jar" depends="compile" description="Build the JAR file">
             <jar jarfile="${dist}/${jarname}">
             <fileset dir="${build}">
-                <include name="bitparallel/communication/ByteBufferListener.class"/>
+                <include name="bitparallel/communication/SerialByteBufferListener.class"/>
                 <include name="bitparallel/communication/SerialCommsHandler.class"/>
             </fileset>
             <file name="linux/libserial_comms_handler_linux_arm32.so"/>

@@ -53,7 +53,7 @@ public class SerialCommsHandler
     private final ByteBuffer rxBuffer;
     private boolean connected;
     private Thread rxCpu;
-    private CopyOnWriteArrayList<ByteBufferListener> byteBufferListeners;
+    private CopyOnWriteArrayList<SerialByteBufferListener> byteBufferListeners;
 
     public SerialCommsHandler()
     {
@@ -63,7 +63,7 @@ public class SerialCommsHandler
 
         deviceFd = -1;
         connected = false;
-        byteBufferListeners = new CopyOnWriteArrayList<ByteBufferListener>();
+        byteBufferListeners = new CopyOnWriteArrayList<SerialByteBufferListener>();
     }
 
     private native long nativeStart(final String device, final int baudRate) throws IOException;
@@ -94,7 +94,7 @@ public class SerialCommsHandler
                     //
                     rxBuffer.clear();
                     nativeRxRead(rxBuffer, device, deviceFd);
-                    if (rxBuffer.limit() > 0) for(ByteBufferListener byteBufferListener : byteBufferListeners) byteBufferListener.rxedByteBuffer(rxBuffer);
+                    if (rxBuffer.limit() > 0) for(SerialByteBufferListener byteBufferListener : byteBufferListeners) byteBufferListener.serialRxedByteBuffer(rxBuffer);
                 }
                 catch (final IOException ex)
                 {
@@ -156,17 +156,17 @@ public class SerialCommsHandler
         return true;
     }
 
-    public void addByteBufferListener(final ByteBufferListener byteBufferListener)
+    public void addSerialByteBufferListener(final SerialByteBufferListener byteBufferListener)
     {
         byteBufferListeners.add(byteBufferListener);
     }
 
-    public void removeByteBufferListener(final ByteBufferListener byteBufferListener)
+    public void removeSerialByteBufferListener(final SerialByteBufferListener byteBufferListener)
     {
         byteBufferListeners.remove(byteBufferListener);
     }
 
-    public void clearByteBufferListeners()
+    public void clearSerialByteBufferListeners()
     {
         byteBufferListeners.clear();
     }

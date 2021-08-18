@@ -8,15 +8,15 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 
-import bitparallel.communication.ByteBufferListener;
+import bitparallel.communication.SerialByteBufferListener;
 import bitparallel.communication.SerialCommsHandler;
 
-public class SerialCommsHandlerTest implements ByteBufferListener
+public class SerialCommsHandlerTest implements SerialByteBufferListener
 {
     public SerialCommsHandlerTest(final String device) throws IOException
     {
         final SerialCommsHandler handler = new SerialCommsHandler();
-        handler.addByteBufferListener(this);
+        handler.addSerialByteBufferListener(this);
         handler.start(device, 57600);
 
         // note, if testing with a linux client, make sure that the baud rate, no local echo and raw mode are configured
@@ -45,7 +45,7 @@ public class SerialCommsHandlerTest implements ByteBufferListener
         t.start();
     }
 
-    public final void rxedByteBuffer(final ByteBuffer buffer)
+    public final void serialRxedByteBuffer(final ByteBuffer buffer)
     {
         // don't actually need to copy the data, although the array() method is optional, so playing safe
         //

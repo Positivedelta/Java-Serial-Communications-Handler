@@ -6,7 +6,7 @@ package bitparallel.communication;
 
 import java.nio.ByteBuffer;
 
-public interface ByteBufferListener
+public interface SerialByteBufferListener
 {
-    public void rxedByteBuffer(final ByteBuffer buffer);
+    public void serialRxedByteBuffer(final ByteBuffer buffer);
 }

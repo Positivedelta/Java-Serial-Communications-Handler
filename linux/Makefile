@@ -1,4 +1,4 @@
-CC=g++
+CC=g++-9.1
 CXX_COMPILE_FLAGS=-std=c++17 -Wall -O3 -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/linux
 
 all: libserial_comms_handler_linux_arm32.so jar
