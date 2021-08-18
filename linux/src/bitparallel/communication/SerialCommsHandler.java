@@ -12,8 +12,13 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 public class SerialCommsHandler
 {
+    private static final Logger logger = LogManager.getLogger(SerialCommsHandler.class);
+
     static
     {
         // FIXME! may need to include "sun.arch.data.model", not sure...
@@ -77,12 +82,12 @@ public class SerialCommsHandler
 
         if (connected)
         {
-            System.out.println("ERROR: Already connected to " + device + " at " + baudRate + " Baud");
+            logger.error("Already connected to " + device + " at " + baudRate + " Baud");
             return false;
         }
 
         deviceFd = nativeStart(device, baudRate);
-        System.out.println("INFO: Successfully connected to " + device + " at " + baudRate + " Baud");
+        logger.info("Successfully connected to " + device + " at " + baudRate + " Baud");
         connected = true;
 
         final Runnable rxTask = () -> {
@@ -100,9 +105,7 @@ public class SerialCommsHandler
                 {
                     // FIXME! investigate ways to throw this exception out of the thread
                     //
-                    System.out.println("ERROR: Unable to read " + device);
-                    System.out.println(ex.getMessage());
-                    ex.printStackTrace();
+                    logger.error("Unable to read " + device + ", reason: " + ex.getMessage(), ex);
                 }
             }
         };
@@ -118,7 +121,7 @@ public class SerialCommsHandler
     {
         if (!connected)
         {
-            System.out.println("ERROR: not connected");
+            logger.error("Unable to transmit, not connected");
             return false;
         }
 
@@ -130,7 +133,7 @@ public class SerialCommsHandler
     {
         if (!connected)
         {
-            System.out.println("ERROR: not connected");
+            logger.error("Nothing to stop, not connected");
             return false;
         }
 
@@ -156,17 +159,17 @@ public class SerialCommsHandler
         return true;
     }
 
-    public void addSerialByteBufferListener(final SerialByteBufferListener byteBufferListener)
+    public void addListener(final SerialByteBufferListener byteBufferListener)
     {
         byteBufferListeners.add(byteBufferListener);
     }
 
-    public void removeSerialByteBufferListener(final SerialByteBufferListener byteBufferListener)
+    public void removeListener(final SerialByteBufferListener byteBufferListener)
     {
         byteBufferListeners.remove(byteBufferListener);
     }
 
-    public void clearSerialByteBufferListeners()
+    public void clearListeners()
     {
         byteBufferListeners.clear();
     }

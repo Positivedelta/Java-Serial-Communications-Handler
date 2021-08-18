@@ -8,15 +8,20 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import bitparallel.communication.SerialByteBufferListener;
 import bitparallel.communication.SerialCommsHandler;
 
 public class SerialCommsHandlerTest implements SerialByteBufferListener
 {
+    private static final Logger logger = LogManager.getLogger(SerialCommsHandlerTest.class);
+
     public SerialCommsHandlerTest(final String device) throws IOException
     {
         final SerialCommsHandler handler = new SerialCommsHandler();
-        handler.addSerialByteBufferListener(this);
+        handler.addListener(this);
         handler.start(device, 57600);
 
         // note, if testing with a linux client, make sure that the baud rate, no local echo and raw mode are configured
@@ -52,7 +57,7 @@ public class SerialCommsHandlerTest implements SerialByteBufferListener
         final byte[] bytes = new byte[buffer.limit()];
         buffer.get(bytes);
 
-        System.out.println("RXed data: [" + (new String(bytes)) + "], " + bytes.length + " bytes");
+        logger.info("RXed data: [" + (new String(bytes)) + "], " + bytes.length + " bytes");
     }
 
     public static final void main(String[] args) throws IOException

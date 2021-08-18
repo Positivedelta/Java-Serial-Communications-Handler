@@ -21,7 +21,14 @@
     </target>
 
     <target name="compile" depends="clean,init" description="Compile source files">
-        <javac includeantruntime="false" srcdir="${src}" destdir="${build}"/>
+        <javac includeantruntime="false" srcdir="${src}" destdir="${build}">
+            <compilerarg value="-version"/>
+            <classpath>
+                <fileset dir="linux/lib">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
     </target>
 
     <target name="jar" depends="compile" description="Build the JAR file">
@@ -32,6 +39,11 @@
             </fileset>
             <file name="linux/libserial_comms_handler_linux_arm32.so"/>
             <file name="windows/libserial_comms_handler_x64.dll"/>
+
+            <!-- include the following tags if you wish to include log4j in the jar file -->
+            <!-- -->
+            <!-- zipgroupfileset dir="linux/lib" includes="**/*.jar"/ -->
+            <!-- file name="${dist}/log4j2.xml"/ -->
         </jar>
     </target>
 
