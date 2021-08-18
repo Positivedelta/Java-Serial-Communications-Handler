@@ -45,7 +45,7 @@ public class SerialCommsHandlerTest implements SerialByteBufferListener
         t.start();
     }
 
-    public final void serialRxedByteBuffer(final ByteBuffer buffer)
+    public final void rxedSerialByteBuffer(final ByteBuffer buffer)
     {
         // don't actually need to copy the data, although the array() method is optional, so playing safe
         //

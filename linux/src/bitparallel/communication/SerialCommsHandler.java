@@ -1,7 +1,7 @@
 package bitparallel.communication;
 
 //
-// (c) Bit Parallel Ltd, December 2020
+// (c) Bit Parallel Ltd, August 2021
 //
 
 import java.io.File;
@@ -82,8 +82,8 @@ public class SerialCommsHandler
         }
 
         deviceFd = nativeStart(device, baudRate);
-        connected = true;
         System.out.println("INFO: Successfully connected to " + device + " at " + baudRate + " Baud");
+        connected = true;
 
         final Runnable rxTask = () -> {
             while (connected)
@@ -94,7 +94,7 @@ public class SerialCommsHandler
                     //
                     rxBuffer.clear();
                     nativeRxRead(rxBuffer, device, deviceFd);
-                    if (rxBuffer.limit() > 0) for(SerialByteBufferListener byteBufferListener : byteBufferListeners) byteBufferListener.serialRxedByteBuffer(rxBuffer);
+                    if (rxBuffer.limit() > 0) for(SerialByteBufferListener byteBufferListener : byteBufferListeners) byteBufferListener.rxedSerialByteBuffer(rxBuffer);
                 }
                 catch (final IOException ex)
                 {
@@ -139,7 +139,7 @@ public class SerialCommsHandler
         {
             rxCpu.join();
         }
-        catch (InterruptedException ex)
+        catch (final InterruptedException ex)
         {
         }
 
