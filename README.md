@@ -57,7 +57,7 @@ Test using,
 ```
 #### Notes
 - The Linux Makefile builds the native shared library, the required JNI header file and hosts the Java sources
-- The linux/ directory also contains a lib/ folder that contains the log4j JAR files required when compiling the Java sources in the Makefile, by default these files are not included in the final JAR file, but if required they can be added by un-commenting the appropriate lines in the Ant build.xml file (this also includes the required log4j2.xml configuration file)
+- The linux/ directory also contains a `lib/` folder that contains the log4j JAR files required when compiling the Java sources in the Makefile, by default these files are not included in the final JAR file, but if required they can be added by un-commenting the appropriate lines in the Ant `build.xml` file (this also includes the required `log4j2.xml` configuration file)
 - Use Visual Studio to build the Windows DLL, note that you will need to keep the JNI header file synchronised with the Linux version if you update it
 - Configure the Visual Studio build as `x64` in `Release` and then copy the resulting DLL to the windows directory (that's where the Ant build XML will expect it to be)
 - Use `ant jar` in the root directory to create the final Java JAR, this will contain the supporting Java class files, Linux shared library and Windows DLL for you to use in your own Java applications, by default this JAR file does not contain the required log4j JARs or its associated configuration, you must either add these (see above) or include them in your application
