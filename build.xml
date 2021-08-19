@@ -31,7 +31,22 @@
         </javac>
     </target>
 
-    <target name="jar" depends="compile" description="Build the JAR file">
+    <!-- does NOT include log4j support in the jar file -->
+    <!-- -->
+    <target name="jar" depends="compile" description="Build the JAR file, does NOT include log4j support">
+            <jar jarfile="${dist}/${jarname}">
+            <fileset dir="${build}">
+                <include name="bitparallel/communication/SerialByteBufferListener.class"/>
+                <include name="bitparallel/communication/SerialCommsHandler.class"/>
+            </fileset>
+            <file name="linux/libserial_comms_handler_linux_arm32.so"/>
+            <file name="windows/libserial_comms_handler_x64.dll"/>
+        </jar>
+    </target>
+
+    <!-- includes log4j support in the jar file -->
+    <!-- -->
+    <target name="jar-log4j" depends="compile" description="Build the JAR file, includes log4j support">
             <jar jarfile="${dist}/${jarname}">
             <fileset dir="${build}">
                 <include name="bitparallel/communication/SerialByteBufferListener.class"/>
@@ -40,14 +55,12 @@
             <file name="linux/libserial_comms_handler_linux_arm32.so"/>
             <file name="windows/libserial_comms_handler_x64.dll"/>
 
-            <!-- include the following tags if you wish to include log4j in the jar file -->
-            <!-- -->
-            <!-- zipgroupfileset dir="linux/lib" includes="**/*.jar"/ -->
-            <!-- file name="${dist}/log4j2.xml"/ -->
+            <zipgroupfileset dir="linux/lib" includes="**/*.jar"/>
+            <file name="${dist}/log4j2.xml"/>
         </jar>
     </target>
 
-    <target name="test" depends="jar" description="Build and test the JAR">
+    <target name="test" depends="jar-log4j" description="Build and test the JAR (includes log4j support)">
         <input message="Please enter a device name:" addproperty="devicename"/>
         <java classname="bitparallel.tests.SerialCommsHandlerTest" fork="true">
             <classpath>
