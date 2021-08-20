@@ -4,7 +4,8 @@
     <property name="src" location="linux/src"/>
     <property name="build" location="build"/>
     <property name="dist" location="."/>
-    <property name="jarname" value="serial-handler-v1.0.jar"/>
+    <property name="jarname-no-log4j" value="serial-handler-v1.0.jar"/>
+    <property name="jarname-with-log4j" value="serial-handler-inc-log4j-v1.0.jar"/>
 
     <target name="init">
         <tstamp/>
@@ -17,7 +18,8 @@
 
     <target name="clean" description="Clean up">
         <delete dir="${build}"/>
-        <delete file="${dist}/${jarname}"/>
+        <delete file="${dist}/${jarname-no-log4j}"/>
+        <delete file="${dist}/${jarname-with-log4j}"/>
     </target>
 
     <target name="compile" depends="clean,init" description="Compile source files">
@@ -34,7 +36,7 @@
     <!-- does NOT include log4j support in the jar file -->
     <!-- -->
     <target name="jar" depends="compile" description="Build the JAR file, does NOT include log4j support">
-            <jar jarfile="${dist}/${jarname}">
+            <jar jarfile="${dist}/${jarname-no-log4j}">
             <fileset dir="${build}">
                 <include name="bitparallel/communication/SerialByteBufferListener.class"/>
                 <include name="bitparallel/communication/SerialCommsHandler.class"/>
@@ -47,7 +49,7 @@
     <!-- includes log4j support in the jar file -->
     <!-- -->
     <target name="jar-log4j" depends="compile" description="Build the JAR file, includes log4j support">
-            <jar jarfile="${dist}/${jarname}">
+            <jar jarfile="${dist}/${jarname-with-log4j}">
             <fileset dir="${build}">
                 <include name="bitparallel/communication/SerialByteBufferListener.class"/>
                 <include name="bitparallel/communication/SerialCommsHandler.class"/>
@@ -64,7 +66,7 @@
         <input message="Please enter a device name:" addproperty="devicename"/>
         <java classname="bitparallel.tests.SerialCommsHandlerTest" fork="true">
             <classpath>
-                <pathelement location="${dist}/${jarname}"/>
+                <pathelement location="${dist}/${jarname-with-log4j}"/>
 
                 <!-- this is included to pickup the test class, everything else is in the jar -->
                 <!-- -->
