@@ -29,6 +29,10 @@ public class SerialCommsHandler
         {
             loadNativeLibrary("libserial_comms_handler_linux_arm32.so");
         }
+        else if ("Linux".equals(osName) && "aarch64".equals(osArch))
+        {
+            loadNativeLibrary("libserial_comms_handler_linux_arm64.so");
+        }
         else if (osName.contains("Windows") && "amd64".equals(osArch))
         {
             // FIXME! add 32 bit support? not really needed...

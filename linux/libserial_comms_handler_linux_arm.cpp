@@ -9,7 +9,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-#include "SerialCommsHandler.h"
+#include "bitparallel_communication_SerialCommsHandler.h"
 
 extern "C"
 {
