@@ -1,7 +1,7 @@
 # Java Serial Communications Handler
 #### Written using JNI (with C/C++) and supports Linux & Windows
 The code included in this repository has been tested on,
-- 32-bit ARM based Linux (I used Raspberry Pi 4)
+- 32/64-bit ARM based Linux (Raspberry Pi 4)
 - Windows 7/10
 
 It would not be difficult to extend this to support other operating systems or versions
@@ -12,13 +12,13 @@ Please note, this code was written for fun and probably contains bugs! However, 
 - Java 8
 - Ant (use the most recent Linux and Windows versions)
 - GCC 9+ (To build the Linux native shared library)
-- Visual Studio 2019 (To build the Windows native DLL)
+- Visual Studio 2022 (To build the Windows native DLL)
 
-For testing and use on the Raspberry Pi, I installed Oracle's 32-bit ARM based JDK for Linux, download the following distribution jdk-8u271-linux-arm32-vfp-hflt.tar.gz
+For testing and use on the Raspberry Pi, I installed Oracle's 32/64-bit ARM based JDK for Linux, download the following distribution jdk-8u271-linux-arm32-vfp-hflt.tar.gz or the latest Debian release for 64-bit systems
 
 I choose the Oracle JDK for performance reasons (supposedly the latest OpenJDK has caught up)
 
-To install the Oracle JDK on a Raspberry Pi use the following procedure, this is assuming Buster Lite with no existing JDK / JRE (you may need to adapt these steps)
+To install the Oracle JDK on a Raspberry Pi use the following procedure, this is assuming Buster Lite with no existing JDK / JRE (adapt these steps as necessary, e.g. to use a 64-bit JDK / JRE installer)
 ```
 - sudo mkdir /usr/java
 - cd /usr/java

@@ -7,7 +7,8 @@
 #include <string>
 #include <sstream>
 #include <stdexcept>
-#include <stdint.h>
+#include <cstdint>
+
 #include <windows.h>
 #include <stdio.h>
 
@@ -227,50 +228,45 @@ extern "C"
 		const int32_t msTimeout = bitparallel_communication_SerialCommsHandler_RX_SELECT_TIMEOUT_US / 1000;
 		int32_t waitEventType = 0;
 		int32_t status = -1;
-		do
+		if (!WaitCommEvent(reinterpret_cast<HANDLE>(handle), (LPDWORD)&waitEventType, &overlappedRead))
 		{
-			if (!WaitCommEvent(reinterpret_cast<HANDLE>(handle), (LPDWORD)&waitEventType, &overlappedRead))
+			if (GetLastError() != ERROR_IO_PENDING)
 			{
-				if (GetLastError() != ERROR_IO_PENDING)
-				{
-					// setup the next RX event in case this is recoverable
-					//
-					SetCommMask(reinterpret_cast<HANDLE>(handle), EV_RXCHAR);
-
-					std::stringstream ss;
-					ss << "Waiting for read event on " << cppDevice << ", failed with ERRNO =  " << GetLastError();
-					env->ThrowNew(jEx, ss.str().c_str());
-					return;
-				}
-			}
-
-			switch (WaitForSingleObject(overlappedRead.hEvent, msTimeout))
-			{
-				// success, the event signal has been received!
+				// setup the next RX event in case this is recoverable
 				//
-				case WAIT_OBJECT_0:
-					status = 0;
-					break;
+				SetCommMask(reinterpret_cast<HANDLE>(handle), EV_RXCHAR);
 
-				case WAIT_TIMEOUT:
-					status = 1;
-					break;
-
-				default:
-				{
-					// setup the next RX event in case this is recoverable
-					//
-					SetCommMask(reinterpret_cast<HANDLE>(handle), EV_RXCHAR);
-
-					std::stringstream ss;
-					ss << "Waiting for single read object on " << cppDevice << ", failed with ERRNO =  " << GetLastError();
-					env->ThrowNew(jEx, ss.str().c_str());
-					return;
-				}
+				std::stringstream ss;
+				ss << "Waiting for read event on " << cppDevice << ", failed with ERRNO =  " << GetLastError();
+				env->ThrowNew(jEx, ss.str().c_str());
+				return;
 			}
+		}
 
-			break;
-		} while (0);
+		switch (WaitForSingleObject(overlappedRead.hEvent, msTimeout))
+		{
+			// success, the event signal has been received!
+			//
+			case WAIT_OBJECT_0:
+				status = 0;
+				break;
+
+			case WAIT_TIMEOUT:
+				status = 1;
+				break;
+
+			default:
+			{
+				// setup the next RX event in case this is recoverable
+				//
+				SetCommMask(reinterpret_cast<HANDLE>(handle), EV_RXCHAR);
+
+				std::stringstream ss;
+				ss << "Waiting for single read object on " << cppDevice << ", failed with ERRNO =  " << GetLastError();
+				env->ThrowNew(jEx, ss.str().c_str());
+				return;
+			}
+		}
 
 		// now read the RXed data
 		//
