@@ -1,7 +1,7 @@
 package bitparallel.communication;
 
 //
-// (c) Bit Parallel Ltd, August 2021
+// (c) Bit Parallel Ltd, May 2023
 //
 
 import java.io.File;
@@ -25,13 +25,20 @@ public class SerialCommsHandler
         //
         final String osName = System.getProperty("os.name");
         final String osArch = System.getProperty("os.arch");
-        if ("Linux".equals(osName) && "arm".equals(osArch))
+        if ("Linux".equals(osName))
         {
-            loadNativeLibrary("libserial_comms_handler_linux_arm32.so");
-        }
-        else if ("Linux".equals(osName) && "aarch64".equals(osArch))
-        {
-            loadNativeLibrary("libserial_comms_handler_linux_arm64.so");
+            if ("arm".equals(osArch))
+            {
+                loadNativeLibrary("libserial_comms_handler_linux_arm32.so");
+            }
+            else if ("aarch64".equals(osArch))
+            {
+                loadNativeLibrary("libserial_comms_handler_linux_arm64.so");
+            }
+            else if ("amd64".equals(osArch))
+            {
+                loadNativeLibrary("libserial_comms_handler_linux_amd64.so");
+            }
         }
         else if (osName.contains("Windows") && "amd64".equals(osArch))
         {

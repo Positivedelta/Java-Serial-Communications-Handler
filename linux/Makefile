@@ -4,7 +4,8 @@ CXX_COMPILE_FLAGS=-std=c++17 -Wall -O3 -I $(JAVA_HOME)/include -I $(JAVA_HOME)/i
 # note, update the mv to reflect underlying architecture, i.e. a 32 / 64 bit so
 #
 all: libserial_comms_handler_linux_arm.so
-	mv libserial_comms_handler_linux_arm.so libserial_comms_handler_linux_arm64.so
+	mv libserial_comms_handler_linux_arm.so libserial_comms_handler_linux_amd64.so
+#	mv libserial_comms_handler_linux_arm.so libserial_comms_handler_linux_arm64.so
 #	mv libserial_comms_handler_linux_arm.so libserial_comms_handler_linux_arm32.so
 
 clean:

@@ -2,6 +2,7 @@
 #### Written using JNI (with C/C++) and supports Linux & Windows
 The code included in this repository has been tested on,
 - 32/64-bit ARM based Linux (Raspberry Pi 4)
+- 64-bit Intel based Linux (x64 Ubuntu 22.04)
 - Windows 7/10
 
 It would not be difficult to extend this to support other operating systems or versions
@@ -9,7 +10,7 @@ It would not be difficult to extend this to support other operating systems or v
 Please note, this code was written for fun and probably contains bugs! However, I plan to evolve and support this code as I use it in my other projects
 
 #### Prerequisites
-- Java 8
+- Java 8+
 - Ant (use the most recent Linux and Windows versions)
 - GCC 9+ (To build the Linux native shared library)
 - Visual Studio 2022 (To build the Windows native DLL)
